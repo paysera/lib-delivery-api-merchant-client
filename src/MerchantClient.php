@@ -23,43 +23,6 @@ class MerchantClient
     }
 
     /**
-     * Get package limit by id
-     * GET /packages/{id}
-     *
-     * @param string $id
-     * @return Entities\PackageLimit
-     */
-    public function getPackage($id)
-    {
-        $request = $this->apiClient->createRequest(
-            RequestMethodInterface::METHOD_GET,
-            sprintf('packages/%s', rawurlencode($id)),
-            null
-        );
-        $data = $this->apiClient->makeRequest($request);
-
-        return new Entities\PackageLimit($data);
-    }
-
-    /**
-     * Standard SQL-style Result filtering
-     * GET /packages
-     *
-     * @return Entities\PackageLimitCollection
-     */
-    public function getPackages()
-    {
-        $request = $this->apiClient->createRequest(
-            RequestMethodInterface::METHOD_GET,
-            'packages',
-            null
-        );
-        $data = $this->apiClient->makeRequest($request);
-
-        return new Entities\PackageLimitCollection($data);
-    }
-
-    /**
      * Standard SQL-style Result filtering
      * GET /packages-suggested
      *
@@ -196,10 +159,10 @@ class MerchantClient
      * Import shipment points from file
      * POST /shipment-points-import
      *
-     * @param Entities\Paysera.File $file
+     * @param Entities\PayseraFile $file
      * @return Entities\ShipmentPointCollection
      */
-    public function createShipmentPointsImport(Entities\Paysera.File $file)
+    public function createShipmentPointsImport(Entities\PayseraFile $file)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_POST,
@@ -311,10 +274,10 @@ class MerchantClient
      * Import orders from file
      * POST /orders-import
      *
-     * @param Entities\Paysera.File $file
+     * @param Entities\PayseraFile $file
      * @return Entities\OrderCollection
      */
-    public function createOrdersImport(Entities\Paysera.File $file)
+    public function createOrdersImport(Entities\PayseraFile $file)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_POST,
@@ -432,7 +395,7 @@ class MerchantClient
      * GET /orders-export
      *
      * @param Entities\OrderFilter $orderFilter
-     * @return Entities\Paysera.File
+     * @return Entities\PayseraFile
      */
     public function getOrdersExport(Entities\OrderFilter $orderFilter)
     {
@@ -443,7 +406,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\Paysera.File($data);
+        return new Entities\PayseraFile($data);
     }
 
     /**
@@ -470,7 +433,7 @@ class MerchantClient
      * GET /orders/{id}/manifest
      *
      * @param string $id
-     * @return Entities\Paysera.File
+     * @return Entities\PayseraFile
      */
     public function getOrderManifest($id)
     {
@@ -481,7 +444,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\Paysera.File($data);
+        return new Entities\PayseraFile($data);
     }
 
     /**
@@ -489,7 +452,7 @@ class MerchantClient
      * GET /orders/{id}/label
      *
      * @param string $id
-     * @return Entities\Paysera.File
+     * @return Entities\PayseraFile
      */
     public function getOrderLabel($id)
     {
@@ -500,7 +463,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\Paysera.File($data);
+        return new Entities\PayseraFile($data);
     }
 
     /**
@@ -623,7 +586,7 @@ class MerchantClient
      * GET /statistics/export
      *
      * @param Entities\ActivityFilter $activityFilter
-     * @return Entities\Paysera.File
+     * @return Entities\PayseraFile
      */
     public function getStatisticExport(Entities\ActivityFilter $activityFilter)
     {
@@ -634,7 +597,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\Paysera.File($data);
+        return new Entities\PayseraFile($data);
     }
 
     /**
