@@ -35,43 +35,6 @@ Now, that you have instance of `MerchantClient`, you can use following methods
 ### Methods
 
     
-Get package limit by id
-
-
-```php
-
-$result = $merchantClient->getPackage($id);
-```
----
-
-
-Standard SQL-style Result filtering
-
-
-```php
-
-$result = $merchantClient->getPackages();
-```
----
-
-    
-Standard SQL-style Result filtering
-
-
-```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
-
-$suggestedPackageLimitFilter = new Entities\SuggestedPackageLimitFilter();
-
-$suggestedPackageLimitFilter->setProjectId($projectId);
-$suggestedPackageLimitFilter->setFromCountryCode($fromCountryCode);
-$suggestedPackageLimitFilter->setToCountryCode($toCountryCode);
-    
-$result = $merchantClient->getPackagesSuggested($suggestedPackageLimitFilter);
-```
----
-
-    
 Get shipment method by id
 
 
@@ -169,7 +132,7 @@ Import shipment points from file
 ```php
 use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 
-$file = new Entities\Paysera.File();
+$file = new Entities\File();
 
 $file->setName($name);
 $file->setContent($content);
@@ -263,7 +226,7 @@ Import orders from file
 ```php
 use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 
-$file = new Entities\Paysera.File();
+$file = new Entities\File();
 
 $file->setName($name);
 $file->setContent($content);
@@ -309,6 +272,20 @@ $result = $merchantClient->getProjectGateways($projectId, $filter);
 ```
 ---
 
+Update project gateways
+
+
+```php
+use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+
+$shipmentGatewayCreateCollection = new Entities\ShipmentGatewayCreateCollection();
+
+$shipmentGatewayCreateCollection->setList($list);
+    
+$result = $merchantClient->updateProjectGateways($projectId, $shipmentGatewayCreateCollection);
+```
+---
+
 
 Update project shipment method
 
@@ -341,6 +318,20 @@ $filter->setAfter($after);
 $filter->setBefore($before);
     
 $result = $merchantClient->getProjectMethods($projectId, $filter);
+```
+---
+
+Update project methods
+
+
+```php
+use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+
+$shipmentMethodCreateCollection = new Entities\ShipmentMethodCreateCollection();
+
+$shipmentMethodCreateCollection->setList($list);
+    
+$result = $merchantClient->updateProjectMethods($projectId, $shipmentMethodCreateCollection);
 ```
 ---
 
