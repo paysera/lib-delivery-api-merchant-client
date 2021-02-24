@@ -2,9 +2,9 @@
 
 namespace Paysera\DeliveryApi\MerchantClient\Entity;
 
-use Paysera\Component\RestClientCommon\Entity\Result;
+use Paysera\Component\RestClientCommon\Entity\Entity;
 
-class SuggestedPackageLimitCollection extends Result
+class ShipmentMethodCreateCollection extends Entity
 {
     public function __construct(array $data = [])
     {
@@ -12,7 +12,7 @@ class SuggestedPackageLimitCollection extends Result
     }
 
     /**
-     * @return SuggestedPackageLimit[]
+     * @return ShipmentMethodUpdate[]
      */
     public function getList()
     {
@@ -23,13 +23,13 @@ class SuggestedPackageLimitCollection extends Result
 
         $list = [];
         foreach($items as &$item) {
-            $list[] = (new SuggestedPackageLimit())->setDataByReference($item);
+            $list[] = (new ShipmentMethodUpdate())->setDataByReference($item);
         }
 
         return $list;
     }
     /**
-     * @param SuggestedPackageLimit[] $list
+     * @param ShipmentMethodUpdate[] $list
      * @return $this
      */
     public function setList(array $list)

@@ -23,25 +23,6 @@ class MerchantClient
     }
 
     /**
-     * Standard SQL-style Result filtering
-     * GET /packages-suggested
-     *
-     * @param Entities\SuggestedPackageLimitFilter $suggestedPackageLimitFilter
-     * @return Entities\SuggestedPackageLimitCollection
-     */
-    public function getPackagesSuggested(Entities\SuggestedPackageLimitFilter $suggestedPackageLimitFilter)
-    {
-        $request = $this->apiClient->createRequest(
-            RequestMethodInterface::METHOD_GET,
-            'packages-suggested',
-            $suggestedPackageLimitFilter
-        );
-        $data = $this->apiClient->makeRequest($request);
-
-        return new Entities\SuggestedPackageLimitCollection($data);
-    }
-
-    /**
      * Get shipment method by id
      * GET /methods/{id}
      *
@@ -159,10 +140,10 @@ class MerchantClient
      * Import shipment points from file
      * POST /shipment-points-import
      *
-     * @param Entities\PayseraFile $file
+     * @param Entities\File $file
      * @return Entities\ShipmentPointCollection
      */
-    public function createShipmentPointsImport(Entities\PayseraFile $file)
+    public function createShipmentPointsImport(Entities\File $file)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_POST,
@@ -274,10 +255,10 @@ class MerchantClient
      * Import orders from file
      * POST /orders-import
      *
-     * @param Entities\PayseraFile $file
+     * @param Entities\File $file
      * @return Entities\OrderCollection
      */
-    public function createOrdersImport(Entities\PayseraFile $file)
+    public function createOrdersImport(Entities\File $file)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_POST,
@@ -331,6 +312,26 @@ class MerchantClient
     }
 
     /**
+     * Update project gateways
+     * PUT /projects/{projectId}/gateways
+     *
+     * @param string $projectId
+     * @param Entities\ShipmentGatewayCreateCollection $shipmentGatewayCreateCollection
+     * @return Entities\ShipmentGateway
+     */
+    public function updateProjectGateways($projectId, Entities\ShipmentGatewayCreateCollection $shipmentGatewayCreateCollection)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_PUT,
+            sprintf('projects/%s/gateways', rawurlencode($projectId)),
+            $shipmentGatewayCreateCollection
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\ShipmentGateway($data);
+    }
+
+    /**
      * Update project shipment method
      * PUT /projects/{projectId}/methods/{methodId}
      *
@@ -372,6 +373,26 @@ class MerchantClient
     }
 
     /**
+     * Update project methods
+     * PUT /projects/{projectId}/methods
+     *
+     * @param string $projectId
+     * @param Entities\ShipmentMethodCreateCollection $shipmentMethodCreateCollection
+     * @return Entities\ShipmentMethod
+     */
+    public function updateProjectMethods($projectId, Entities\ShipmentMethodCreateCollection $shipmentMethodCreateCollection)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_PUT,
+            sprintf('projects/%s/methods', rawurlencode($projectId)),
+            $shipmentMethodCreateCollection
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\ShipmentMethod($data);
+    }
+
+    /**
      * Standard SQL-style Result filtering
      * GET /projects
      *
@@ -395,7 +416,7 @@ class MerchantClient
      * GET /orders-export
      *
      * @param Entities\OrderFilter $orderFilter
-     * @return Entities\PayseraFile
+     * @return Entities\File
      */
     public function getOrdersExport(Entities\OrderFilter $orderFilter)
     {
@@ -406,7 +427,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\PayseraFile($data);
+        return new Entities\File($data);
     }
 
     /**
@@ -433,7 +454,7 @@ class MerchantClient
      * GET /orders/{id}/manifest
      *
      * @param string $id
-     * @return Entities\PayseraFile
+     * @return Entities\File
      */
     public function getOrderManifest($id)
     {
@@ -444,7 +465,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\PayseraFile($data);
+        return new Entities\File($data);
     }
 
     /**
@@ -452,7 +473,7 @@ class MerchantClient
      * GET /orders/{id}/label
      *
      * @param string $id
-     * @return Entities\PayseraFile
+     * @return Entities\File
      */
     public function getOrderLabel($id)
     {
@@ -463,7 +484,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\PayseraFile($data);
+        return new Entities\File($data);
     }
 
     /**
@@ -586,7 +607,7 @@ class MerchantClient
      * GET /statistics/export
      *
      * @param Entities\ActivityFilter $activityFilter
-     * @return Entities\PayseraFile
+     * @return Entities\File
      */
     public function getStatisticExport(Entities\ActivityFilter $activityFilter)
     {
@@ -597,7 +618,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\PayseraFile($data);
+        return new Entities\File($data);
     }
 
     /**
