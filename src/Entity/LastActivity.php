@@ -44,6 +44,22 @@ class LastActivity extends Entity
         return $this;
     }
     /**
+     * @return string
+     */
+    public function getStatusDescription()
+    {
+        return $this->get('status_description');
+    }
+    /**
+     * @param string $statusDescription
+     * @return $this
+     */
+    public function setStatusDescription($statusDescription)
+    {
+        $this->set('status_description', $statusDescription);
+        return $this;
+    }
+    /**
      * @return Order
      */
     public function getOrder()

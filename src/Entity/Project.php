@@ -43,4 +43,20 @@ class Project extends Entity
         $this->set('name', $name);
         return $this;
     }
+    /**
+     * @return string|null
+     */
+    public function getExternalProjectId()
+    {
+        return $this->get('external_project_id');
+    }
+    /**
+     * @param string $externalProjectId
+     * @return $this
+     */
+    public function setExternalProjectId($externalProjectId)
+    {
+        $this->set('external_project_id', $externalProjectId);
+        return $this;
+    }
 }

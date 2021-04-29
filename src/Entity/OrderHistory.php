@@ -43,4 +43,20 @@ class OrderHistory extends Entity
         $this->set('status', $status);
         return $this;
     }
+    /**
+     * @return string
+     */
+    public function getStatusDescription()
+    {
+        return $this->get('status_description');
+    }
+    /**
+     * @param string $statusDescription
+     * @return $this
+     */
+    public function setStatusDescription($statusDescription)
+    {
+        $this->set('status_description', $statusDescription);
+        return $this;
+    }
 }

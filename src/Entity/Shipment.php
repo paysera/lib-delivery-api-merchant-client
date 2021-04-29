@@ -123,4 +123,20 @@ class Shipment extends Entity
         $this->set('height', $height);
         return $this;
     }
+    /**
+     * @return string|null
+     */
+    public function getTrackingCode()
+    {
+        return $this->get('tracking_code');
+    }
+    /**
+     * @param string $trackingCode
+     * @return $this
+     */
+    public function setTrackingCode($trackingCode)
+    {
+        $this->set('tracking_code', $trackingCode);
+        return $this;
+    }
 }

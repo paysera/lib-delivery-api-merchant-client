@@ -23,19 +23,19 @@ class OrderFilter extends Filter
         return $this;
     }
     /**
-     * @return string|null
+     * @return string[]|null
      */
-    public function getOrderStatus()
+    public function getOrderStatuses()
     {
-        return $this->get('order_status');
+        return $this->get('order_statuses');
     }
     /**
-     * @param string $orderStatus
+     * @param string[] $orderStatuses
      * @return $this
      */
-    public function setOrderStatus($orderStatus)
+    public function setOrderStatuses(array $orderStatuses)
     {
-        $this->set('order_status', $orderStatus);
+        $this->set('order_statuses', $orderStatuses);
         return $this;
     }
     /**

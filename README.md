@@ -132,7 +132,7 @@ Import shipment points from file
 ```php
 use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 
-$file = new Entities\File();
+$file = new \Paysera\Component\RestClientCommon\Entity\File();
 
 $file->setName($name);
 $file->setContent($content);
@@ -213,6 +213,7 @@ $shipmentPointFilter = new Entities\ShipmentPointFilter();
 
 $shipmentPointFilter->setType($type);
 $shipmentPointFilter->setTitlePart($titlePart);
+$shipmentPointFilter->setDefaultContact($defaultContact);
 $shipmentPointFilter->setProjects($projects);
     
 $result = $merchantClient->getShipmentPoints($shipmentPointFilter);
@@ -226,7 +227,7 @@ Import orders from file
 ```php
 use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 
-$file = new Entities\File();
+$file = new \Paysera\Component\RestClientCommon\Entity\File();
 
 $file->setName($name);
 $file->setContent($content);
@@ -366,7 +367,7 @@ use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 $orderFilter = new Entities\OrderFilter();
 
 $orderFilter->setProjects($projects);
-$orderFilter->setOrderStatus($orderStatus);
+$orderFilter->setOrderStatuses($orderStatuses);
 $orderFilter->setReceiverCountryCode($receiverCountryCode);
 $orderFilter->setReceiverNamePart($receiverNamePart);
 $orderFilter->setReceiverPhonePart($receiverPhonePart);
@@ -399,6 +400,15 @@ $result = $merchantClient->createOrdersConfirm($orderIdsList);
 ---
 
     
+Generate manifest and call courier for &quot;label_generated&quot; order
+
+
+```php
+
+$result = $merchantClient->createOrderManifest($id);
+```
+---
+
 Get manifest file
 
 
@@ -408,6 +418,15 @@ $result = $merchantClient->getOrderManifest($id);
 ```
 ---
 
+
+Generate labels for &quot;in progress&quot; order
+
+
+```php
+
+$result = $merchantClient->createOrderLabel($id);
+```
+---
 
 Get label file
 
@@ -491,7 +510,7 @@ use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 $orderFilter = new Entities\OrderFilter();
 
 $orderFilter->setProjects($projects);
-$orderFilter->setOrderStatus($orderStatus);
+$orderFilter->setOrderStatuses($orderStatuses);
 $orderFilter->setReceiverCountryCode($receiverCountryCode);
 $orderFilter->setReceiverNamePart($receiverNamePart);
 $orderFilter->setReceiverPhonePart($receiverPhonePart);
@@ -574,6 +593,32 @@ $activityFilter->setDateFrom($dateFrom);
 $activityFilter->setDateTill($dateTill);
     
 $result = $merchantClient->getStatistics($activityFilter);
+```
+---
+
+    
+Get countries list
+
+
+```php
+
+$result = $merchantClient->getCountries();
+```
+---
+
+    
+Standard SQL-style Result filtering
+
+
+```php
+use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+
+$cityFilter = new Entities\CityFilter();
+
+$cityFilter->setCountry($country);
+$cityFilter->setGatewayCode($gatewayCode);
+    
+$result = $merchantClient->getCities($cityFilter);
 ```
 ---
 
