@@ -6,6 +6,7 @@ use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 use Fig\Http\Message\RequestMethodInterface;
 use Paysera\Component\RestClientCommon\Entity\Entity;
 use Paysera\Component\RestClientCommon\Client\ApiClient;
+use Paysera\Component\RestClientCommon\Entity\File;
 use Paysera\Component\RestClientCommon\Entity\Filter;
 
 class MerchantClient
@@ -140,10 +141,10 @@ class MerchantClient
      * Import shipment points from file
      * POST /shipment-points-import
      *
-     * @param Entities\File $file
+     * @param File $file
      * @return Entities\ShipmentPointCollection
      */
-    public function createShipmentPointsImport(Entities\File $file)
+    public function createShipmentPointsImport(File $file)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_POST,
@@ -255,10 +256,10 @@ class MerchantClient
      * Import orders from file
      * POST /orders-import
      *
-     * @param Entities\File $file
+     * @param File $file
      * @return Entities\OrderCollection
      */
-    public function createOrdersImport(Entities\File $file)
+    public function createOrdersImport(File $file)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_POST,
@@ -416,7 +417,7 @@ class MerchantClient
      * GET /orders-export
      *
      * @param Entities\OrderFilter $orderFilter
-     * @return Entities\File
+     * @return File
      */
     public function getOrdersExport(Entities\OrderFilter $orderFilter)
     {
@@ -427,7 +428,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\File($data);
+        return new File($data);
     }
 
     /**
@@ -450,11 +451,30 @@ class MerchantClient
     }
 
     /**
+     * Generate manifest and call courier for "label_generated" order
+     * POST /orders/{id}/manifest
+     *
+     * @param string $id
+     * @return Entities\Order
+     */
+    public function createOrderManifest($id)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_POST,
+            sprintf('orders/%s/manifest', rawurlencode($id)),
+            null
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\Order($data);
+    }
+
+    /**
      * Get manifest file
      * GET /orders/{id}/manifest
      *
      * @param string $id
-     * @return Entities\File
+     * @return File
      */
     public function getOrderManifest($id)
     {
@@ -465,7 +485,26 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\File($data);
+        return new File($data);
+    }
+
+    /**
+     * Generate labels for "in progress" order
+     * POST /orders/{id}/label
+     *
+     * @param string $id
+     * @return Entities\Order
+     */
+    public function createOrderLabel($id)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_POST,
+            sprintf('orders/%s/label', rawurlencode($id)),
+            null
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\Order($data);
     }
 
     /**
@@ -473,7 +512,7 @@ class MerchantClient
      * GET /orders/{id}/label
      *
      * @param string $id
-     * @return Entities\File
+     * @return File
      */
     public function getOrderLabel($id)
     {
@@ -484,7 +523,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\File($data);
+        return new File($data);
     }
 
     /**
@@ -607,7 +646,7 @@ class MerchantClient
      * GET /statistics/export
      *
      * @param Entities\ActivityFilter $activityFilter
-     * @return Entities\File
+     * @return File
      */
     public function getStatisticExport(Entities\ActivityFilter $activityFilter)
     {
@@ -618,7 +657,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\File($data);
+        return new File($data);
     }
 
     /**
@@ -657,5 +696,42 @@ class MerchantClient
         $data = $this->apiClient->makeRequest($request);
 
         return new Entities\ActivityCollection($data);
+    }
+
+    /**
+     * Get countries list
+     * GET /countries
+     *
+     * @return Entities\CountriesCollection
+     */
+    public function getCountries()
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_GET,
+            'countries',
+            null
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\CountriesCollection($data);
+    }
+
+    /**
+     * Standard SQL-style Result filtering
+     * GET /cities
+     *
+     * @param Entities\CityFilter $cityFilter
+     * @return Entities\CityCollection
+     */
+    public function getCities(Entities\CityFilter $cityFilter)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_GET,
+            'cities',
+            $cityFilter
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\CityCollection($data);
     }
 }

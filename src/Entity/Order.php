@@ -211,6 +211,22 @@ class Order extends Entity
         return $this;
     }
     /**
+     * @return string
+     */
+    public function getStatusDescription()
+    {
+        return $this->get('status_description');
+    }
+    /**
+     * @param string $statusDescription
+     * @return $this
+     */
+    public function setStatusDescription($statusDescription)
+    {
+        $this->set('status_description', $statusDescription);
+        return $this;
+    }
+    /**
      * @return Money
      */
     public function getPrice()
@@ -256,6 +272,25 @@ class Order extends Entity
     public function setHistory(OrderHistoryCollection $history)
     {
         $this->setByReference('history', $history->getDataByReference());
+        return $this;
+    }
+    /**
+     * @return OrderConfirmationErrorCollection|null
+     */
+    public function getConfirmationErrors()
+    {
+        if ($this->get('confirmation_errors') === null) {
+            return null;
+        }
+        return (new OrderConfirmationErrorCollection())->setDataByReference($this->getByReference('confirmation_errors'));
+    }
+    /**
+     * @param OrderConfirmationErrorCollection $confirmationErrors
+     * @return $this
+     */
+    public function setConfirmationErrors(OrderConfirmationErrorCollection $confirmationErrors)
+    {
+        $this->setByReference('confirmation_errors', $confirmationErrors->getDataByReference());
         return $this;
     }
 }

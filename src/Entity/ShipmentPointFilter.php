@@ -39,6 +39,22 @@ class ShipmentPointFilter extends Filter
         return $this;
     }
     /**
+     * @return boolean|null
+     */
+    public function isDefaultContact()
+    {
+        return $this->get('default_contact');
+    }
+    /**
+     * @param boolean $defaultContact
+     * @return $this
+     */
+    public function setDefaultContact($defaultContact)
+    {
+        $this->set('default_contact', $defaultContact);
+        return $this;
+    }
+    /**
      * @return string[]|null
      */
     public function getProjects()
