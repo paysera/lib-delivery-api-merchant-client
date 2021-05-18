@@ -214,4 +214,20 @@ class OrderFilter extends Filter
         $this->set('with_label', $withLabel);
         return $this;
     }
+    /**
+     * @return string|null
+     */
+    public function getEshopOrderId()
+    {
+        return $this->get('eshop_order_id');
+    }
+    /**
+     * @param string $eshopOrderId
+     * @return $this
+     */
+    public function setEshopOrderId($eshopOrderId)
+    {
+        $this->set('eshop_order_id', $eshopOrderId);
+        return $this;
+    }
 }
