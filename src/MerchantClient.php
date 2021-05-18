@@ -734,4 +734,81 @@ class MerchantClient
 
         return new Entities\CityCollection($data);
     }
+
+    /**
+     * List credentials
+     * GET /courier-api-credentials/{projectId}
+     *
+     * @param string $projectId
+     * @return Entities\CourierApiCredentialsCollection
+     */
+    public function getCourierApiCredential($projectId)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_GET,
+            sprintf('courier-api-credentials/%s', rawurlencode($projectId)),
+            null
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\CourierApiCredentialsCollection($data);
+    }
+
+    /**
+     * Update credentials
+     * PUT /courier-api-credentials/{hash}
+     *
+     * @param string $hash
+     * @param Entities\CourierApiCredentialsCreate $courierApiCredentialsCreate
+     * @return Entities\CourierApiCredentials
+     */
+    public function updateCourierApiCredential($hash, Entities\CourierApiCredentialsCreate $courierApiCredentialsCreate)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_PUT,
+            sprintf('courier-api-credentials/%s', rawurlencode($hash)),
+            $courierApiCredentialsCreate
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\CourierApiCredentials($data);
+    }
+
+    /**
+     * Delete credentials
+     * DELETE /courier-api-credentials/{hash}
+     *
+     * @param string $hash
+     * @return null
+     */
+    public function deleteCourierApiCredential($hash)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_DELETE,
+            sprintf('courier-api-credentials/%s', rawurlencode($hash)),
+            null
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return null;
+    }
+
+    /**
+     * Create new credentials
+     * POST /courier-api-credentials
+     *
+     * @param Entities\CourierApiCredentialsCreate $courierApiCredentialsCreate
+     * @return Entities\CourierApiCredentials
+     */
+    public function createCourierApiCredential(Entities\CourierApiCredentialsCreate $courierApiCredentialsCreate)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_POST,
+            'courier-api-credentials',
+            $courierApiCredentialsCreate
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\CourierApiCredentials($data);
+    }
 }
