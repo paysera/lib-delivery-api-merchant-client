@@ -27,4 +27,20 @@ class OrderConfirmationError extends Entity
         $this->set('description_token', $descriptionToken);
         return $this;
     }
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->get('description');
+    }
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->set('description', $description);
+        return $this;
+    }
 }

@@ -1,6 +1,6 @@
 {
-    "name": "paysera/lib-delivery-api-merchant-client",
-    "description": "Paysera Delivery Api Merchant Client",
+    "name": "vendor/lib-merchant-client",
+    "description": "MerchantClient",
     "autoload": {
         "psr-4": {
             "Paysera\\DeliveryApi\\MerchantClient\\": "src"

@@ -114,6 +114,22 @@ class ShipmentPointCreate extends Entity
         return $this;
     }
     /**
+     * @return string|null
+     */
+    public function getAdditionalInfo()
+    {
+        return $this->get('additional_info');
+    }
+    /**
+     * @param string $additionalInfo
+     * @return $this
+     */
+    public function setAdditionalInfo($additionalInfo)
+    {
+        $this->set('additional_info', $additionalInfo);
+        return $this;
+    }
+    /**
      * @return boolean
      */
     public function isDefaultContact()
