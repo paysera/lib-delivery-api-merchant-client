@@ -1,8 +1,8 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient;
+namespace MerchantClient;
 
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 use Fig\Http\Message\RequestMethodInterface;
 use Paysera\Component\RestClientCommon\Entity\Entity;
 use Paysera\Component\RestClientCommon\Client\ApiClient;
@@ -21,6 +21,25 @@ class MerchantClient
     public function withOptions(array $options)
     {
         return new MerchantClient($this->apiClient->withOptions($options));
+    }
+
+    /**
+     * Standard SQL-style Result filtering
+     * GET /default-package-sizes
+     *
+     * @param Filter $filter
+     * @return Entities\DefaultPackageSizeCollection
+     */
+    public function getDefaultPackageSizes(Filter $filter)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_GET,
+            'default-package-sizes',
+            $filter
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\DefaultPackageSizeCollection($data);
     }
 
     /**
@@ -272,6 +291,64 @@ class MerchantClient
     }
 
     /**
+     * Get current default package size
+     * GET /projects/{projectId}/default-package-size
+     *
+     * @param string $projectId
+     * @return Entities\DefaultPackageSizeSet
+     */
+    public function getProjectDefaultPackageSize($projectId)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_GET,
+            sprintf('projects/%s/default-package-size', rawurlencode($projectId)),
+            null
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\DefaultPackageSizeSet($data);
+    }
+
+    /**
+     * Update default package size
+     * PUT /projects/{projectId}/default-package-size
+     *
+     * @param string $projectId
+     * @param Entities\DefaultPackageSizeCode $defaultPackageSizeCode
+     * @return Entities\DefaultPackageSize
+     */
+    public function updateProjectDefaultPackageSize($projectId, Entities\DefaultPackageSizeCode $defaultPackageSizeCode)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_PUT,
+            sprintf('projects/%s/default-package-size', rawurlencode($projectId)),
+            $defaultPackageSizeCode
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\DefaultPackageSize($data);
+    }
+
+    /**
+     * Remove default package size
+     * DELETE /projects/{projectId}/default-package-size
+     *
+     * @param string $projectId
+     * @return null
+     */
+    public function deleteProjectDefaultPackageSize($projectId)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_DELETE,
+            sprintf('projects/%s/default-package-size', rawurlencode($projectId)),
+            null
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return null;
+    }
+
+    /**
      * Update project shipment gateway
      * PUT /projects/{projectId}/gateways/{gatewayId}
      *
@@ -417,7 +494,7 @@ class MerchantClient
      * GET /orders-export
      *
      * @param Entities\OrderFilter $orderFilter
-     * @return File
+     * @return Entities\Paysera.File
      */
     public function getOrdersExport(Entities\OrderFilter $orderFilter)
     {
@@ -428,7 +505,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new File($data);
+        return new Entities\Paysera.File($data);
     }
 
     /**
@@ -474,7 +551,7 @@ class MerchantClient
      * GET /orders/{id}/manifest
      *
      * @param string $id
-     * @return File
+     * @return Entities\Paysera.File
      */
     public function getOrderManifest($id)
     {
@@ -485,7 +562,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new File($data);
+        return new Entities\Paysera.File($data);
     }
 
     /**
@@ -512,7 +589,7 @@ class MerchantClient
      * GET /orders/{id}/label
      *
      * @param string $id
-     * @return File
+     * @return Entities\Paysera.File
      */
     public function getOrderLabel($id)
     {
@@ -523,7 +600,26 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new File($data);
+        return new Entities\Paysera.File($data);
+    }
+
+    /**
+     * reset order to draft state
+     * PUT /orders/{id}/reset-to-draft
+     *
+     * @param string $id
+     * @return Entities\Order
+     */
+    public function resetOrderToDraft($id)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_PUT,
+            sprintf('orders/%s/reset-to-draft', rawurlencode($id)),
+            null
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\Order($data);
     }
 
     /**
@@ -646,7 +742,7 @@ class MerchantClient
      * GET /statistics/export
      *
      * @param Entities\ActivityFilter $activityFilter
-     * @return File
+     * @return Entities\Paysera.File
      */
     public function getStatisticExport(Entities\ActivityFilter $activityFilter)
     {
@@ -657,7 +753,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new File($data);
+        return new Entities\Paysera.File($data);
     }
 
     /**
@@ -699,17 +795,18 @@ class MerchantClient
     }
 
     /**
-     * Get countries list
+     * Standard SQL-style Result filtering
      * GET /countries
      *
+     * @param Entities\CountryFilter $countryFilter
      * @return Entities\CountriesCollection
      */
-    public function getCountries()
+    public function getCountries(Entities\CountryFilter $countryFilter)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_GET,
             'countries',
-            null
+            $countryFilter
         );
         $data = $this->apiClient->makeRequest($request);
 
@@ -756,17 +853,17 @@ class MerchantClient
 
     /**
      * Update credentials
-     * PUT /courier-api-credentials/{hash}
+     * PUT /courier-api-credentials/{id}
      *
-     * @param string $hash
+     * @param string $id
      * @param Entities\CourierApiCredentialsCreate $courierApiCredentialsCreate
      * @return Entities\CourierApiCredentials
      */
-    public function updateCourierApiCredential($hash, Entities\CourierApiCredentialsCreate $courierApiCredentialsCreate)
+    public function updateCourierApiCredential($id, Entities\CourierApiCredentialsCreate $courierApiCredentialsCreate)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_PUT,
-            sprintf('courier-api-credentials/%s', rawurlencode($hash)),
+            sprintf('courier-api-credentials/%s', rawurlencode($id)),
             $courierApiCredentialsCreate
         );
         $data = $this->apiClient->makeRequest($request);
@@ -776,16 +873,16 @@ class MerchantClient
 
     /**
      * Delete credentials
-     * DELETE /courier-api-credentials/{hash}
+     * DELETE /courier-api-credentials/{id}
      *
-     * @param string $hash
+     * @param string $id
      * @return null
      */
-    public function deleteCourierApiCredential($hash)
+    public function deleteCourierApiCredential($id)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_DELETE,
-            sprintf('courier-api-credentials/%s', rawurlencode($hash)),
+            sprintf('courier-api-credentials/%s', rawurlencode($id)),
             null
         );
         $data = $this->apiClient->makeRequest($request);

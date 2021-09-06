@@ -4,7 +4,7 @@ namespace MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Entity;
 
-class Shipment extends Entity
+class DefaultPackageSize extends Entity
 {
     public function __construct(array $data = [])
     {
@@ -14,49 +14,17 @@ class Shipment extends Entity
     /**
      * @return string
      */
-    public function getId()
+    public function getCode()
     {
-        return $this->get('id');
+        return $this->get('code');
     }
     /**
-     * @param string $id
+     * @param string $code
      * @return $this
      */
-    public function setId($id)
+    public function setCode($code)
     {
-        $this->set('id', $id);
-        return $this;
-    }
-    /**
-     * @return string
-     */
-    public function getPackageId()
-    {
-        return $this->get('package_id');
-    }
-    /**
-     * @param string $packageId
-     * @return $this
-     */
-    public function setPackageId($packageId)
-    {
-        $this->set('package_id', $packageId);
-        return $this;
-    }
-    /**
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->get('status');
-    }
-    /**
-     * @param string $status
-     * @return $this
-     */
-    public function setStatus($status)
-    {
-        $this->set('status', $status);
+        $this->set('code', $code);
         return $this;
     }
     /**
@@ -121,22 +89,6 @@ class Shipment extends Entity
     public function setHeight($height)
     {
         $this->set('height', $height);
-        return $this;
-    }
-    /**
-     * @return string|null
-     */
-    public function getTrackingCode()
-    {
-        return $this->get('tracking_code');
-    }
-    /**
-     * @param string $trackingCode
-     * @return $this
-     */
-    public function setTrackingCode($trackingCode)
-    {
-        $this->set('tracking_code', $trackingCode);
         return $this;
     }
 }

@@ -4,7 +4,7 @@ namespace MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Entity;
 
-class ShipmentMethodCreate extends Entity
+class DefaultPackageSizeCode extends Entity
 {
     public function __construct(array $data = [])
     {
@@ -12,19 +12,19 @@ class ShipmentMethodCreate extends Entity
     }
 
     /**
-     * @return boolean
+     * @return string
      */
-    public function isEnabled()
+    public function getCode()
     {
-        return $this->get('enabled');
+        return $this->get('code');
     }
     /**
-     * @param boolean $enabled
+     * @param string $code
      * @return $this
      */
-    public function setEnabled($enabled)
+    public function setCode($code)
     {
-        $this->set('enabled', $enabled);
+        $this->set('code', $code);
         return $this;
     }
 }

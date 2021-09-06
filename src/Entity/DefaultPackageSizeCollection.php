@@ -2,9 +2,9 @@
 
 namespace MerchantClient\Entity;
 
-use Paysera\Component\RestClientCommon\Entity\Entity;
+use Paysera\Component\RestClientCommon\Entity\Result;
 
-class ShipmentMethodCreateCollection extends Entity
+class DefaultPackageSizeCollection extends Result
 {
     public function __construct(array $data = [])
     {
@@ -12,33 +12,33 @@ class ShipmentMethodCreateCollection extends Entity
     }
 
     /**
-     * @return ShipmentMethodUpdate[]
+     * @return DefaultPackageSize[]
      */
-    public function getList()
+    public function getItems()
     {
-        $items = $this->getByReference('list');
+        $items = $this->getByReference('items');
         if ($items === null) {
             return [];
         }
 
         $list = [];
         foreach($items as &$item) {
-            $list[] = (new ShipmentMethodUpdate())->setDataByReference($item);
+            $list[] = (new DefaultPackageSize())->setDataByReference($item);
         }
 
         return $list;
     }
     /**
-     * @param ShipmentMethodUpdate[] $list
+     * @param DefaultPackageSize[] $items
      * @return $this
      */
-    public function setList(array $list)
+    public function setItems(array $items)
     {
         $data = [];
-        foreach($list as $item) {
+        foreach($items as $item) {
             $data[] = $item->getDataByReference();
         }
-        $this->setByReference('list', $data);
+        $this->setByReference('items', $data);
         return $this;
     }
 }

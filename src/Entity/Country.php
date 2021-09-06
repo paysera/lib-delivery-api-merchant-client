@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient\Entity;
+namespace MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Entity;
 
@@ -25,6 +25,22 @@ class Country extends Entity
     public function setCountryCode($countryCode)
     {
         $this->set('country_code', $countryCode);
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getCountryName()
+    {
+        return $this->get('country_name');
+    }
+    /**
+     * @param string $countryName
+     * @return $this
+     */
+    public function setCountryName($countryName)
+    {
+        $this->set('country_name', $countryName);
         return $this;
     }
 }

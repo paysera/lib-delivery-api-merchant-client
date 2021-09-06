@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient\Entity;
+namespace MerchantClient\Entity;
 
 use Evp\Component\Money\Money;
 use Paysera\Component\RestClientCommon\Entity\Entity;
@@ -42,6 +42,22 @@ class Order extends Entity
     public function setProjectId($projectId)
     {
         $this->set('project_id', $projectId);
+        return $this;
+    }
+    /**
+     * @return string|null
+     */
+    public function getCheckoutProjectId()
+    {
+        return $this->get('checkout_project_id');
+    }
+    /**
+     * @param string $checkoutProjectId
+     * @return $this
+     */
+    public function setCheckoutProjectId($checkoutProjectId)
+    {
+        $this->set('checkout_project_id', $checkoutProjectId);
         return $this;
     }
     /**

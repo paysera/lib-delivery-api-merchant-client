@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient\Entity;
+namespace MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Entity;
 
@@ -111,6 +111,22 @@ class ShipmentPointCreate extends Entity
     public function setParcelMachineId($parcelMachineId)
     {
         $this->set('parcel_machine_id', $parcelMachineId);
+        return $this;
+    }
+    /**
+     * @return string|null
+     */
+    public function getAdditionalInfo()
+    {
+        return $this->get('additional_info');
+    }
+    /**
+     * @param string $additionalInfo
+     * @return $this
+     */
+    public function setAdditionalInfo($additionalInfo)
+    {
+        $this->set('additional_info', $additionalInfo);
         return $this;
     }
     /**

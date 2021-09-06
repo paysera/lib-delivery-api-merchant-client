@@ -1,5 +1,5 @@
 
-## paysera/lib-delivery-api-merchant-client
+## vendor-merchant-client
 
 Provides methods to manipulate `MerchantClient` API.
 It automatically authenticates all requests and maps required data structure for you.
@@ -9,7 +9,7 @@ It automatically authenticates all requests and maps required data structure for
 This library provides `ClientFactory` class, which you should use to get the API client itself:
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\ClientFactory;
+use MerchantClient\ClientFactory;
 
 $clientFactory = new ClientFactory([
     'base_url' => 'https://delivery-api.paysera.com/rest/v1/', // optional, in case you need a custom one.
@@ -35,6 +35,26 @@ Now, that you have instance of `MerchantClient`, you can use following methods
 ### Methods
 
     
+Standard SQL-style Result filtering
+
+
+```php
+use MerchantClient\Entity as Entities;
+
+$filter = new \Paysera\Component\RestClientCommon\Entity\Filter();
+
+$filter->setLimit($limit);
+$filter->setOffset($offset);
+$filter->setOrderBy($orderBy);
+$filter->setOrderDirection($orderDirection);
+$filter->setAfter($after);
+$filter->setBefore($before);
+    
+$result = $merchantClient->getDefaultPackageSizes($filter);
+```
+---
+
+    
 Get shipment method by id
 
 
@@ -49,7 +69,7 @@ Get shipment methods
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $methodsFilter = new Entities\MethodsFilter();
 
@@ -77,7 +97,7 @@ Get shipment gateways
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $gatewaysFilter = new Entities\GatewaysFilter();
 
@@ -96,7 +116,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $postOfficeFilter = new Entities\PostOfficeFilter();
 
@@ -113,7 +133,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $parcelMachineFilter = new Entities\ParcelMachineFilter();
 
@@ -130,7 +150,7 @@ Import shipment points from file
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $file = new \Paysera\Component\RestClientCommon\Entity\File();
 
@@ -157,7 +177,7 @@ Update shipment-point
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $shipmentPointCreate = new Entities\ShipmentPointCreate();
 
@@ -167,6 +187,7 @@ $shipmentPointCreate->setSaved($saved);
 $shipmentPointCreate->setContact($contact);
 $shipmentPointCreate->setPostOfficeId($postOfficeId);
 $shipmentPointCreate->setParcelMachineId($parcelMachineId);
+$shipmentPointCreate->setAdditionalInfo($additionalInfo);
 $shipmentPointCreate->setDefaultContact($defaultContact);
     
 $result = $merchantClient->updateShipmentPoint($id, $shipmentPointCreate);
@@ -187,7 +208,7 @@ Add a new shipment point
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $shipmentPointCreate = new Entities\ShipmentPointCreate();
 
@@ -197,6 +218,7 @@ $shipmentPointCreate->setSaved($saved);
 $shipmentPointCreate->setContact($contact);
 $shipmentPointCreate->setPostOfficeId($postOfficeId);
 $shipmentPointCreate->setParcelMachineId($parcelMachineId);
+$shipmentPointCreate->setAdditionalInfo($additionalInfo);
 $shipmentPointCreate->setDefaultContact($defaultContact);
     
 $result = $merchantClient->createShipmentPoint($shipmentPointCreate);
@@ -207,7 +229,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $shipmentPointFilter = new Entities\ShipmentPointFilter();
 
@@ -225,7 +247,7 @@ Import orders from file
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $file = new \Paysera\Component\RestClientCommon\Entity\File();
 
@@ -239,11 +261,44 @@ $result = $merchantClient->createOrdersImport($file);
 ---
 
     
+Get current default package size
+
+
+```php
+
+$result = $merchantClient->getProjectDefaultPackageSize($projectId);
+```
+---
+
+Update default package size
+
+
+```php
+use MerchantClient\Entity as Entities;
+
+$defaultPackageSizeCode = new Entities\DefaultPackageSizeCode();
+
+$defaultPackageSizeCode->setCode($code);
+    
+$result = $merchantClient->updateProjectDefaultPackageSize($projectId, $defaultPackageSizeCode);
+```
+---
+
+Remove default package size
+
+
+```php
+
+$merchantClient->deleteProjectDefaultPackageSize($projectId);
+```
+---
+
+
 Update project shipment gateway
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $shipmentGatewayCreate = new Entities\ShipmentGatewayCreate();
 
@@ -258,7 +313,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $filter = new \Paysera\Component\RestClientCommon\Entity\Filter();
 
@@ -277,7 +332,7 @@ Update project gateways
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $shipmentGatewayCreateCollection = new Entities\ShipmentGatewayCreateCollection();
 
@@ -292,7 +347,7 @@ Update project shipment method
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $shipmentMethodCreate = new Entities\ShipmentMethodCreate();
 
@@ -307,7 +362,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $filter = new \Paysera\Component\RestClientCommon\Entity\Filter();
 
@@ -326,7 +381,7 @@ Update project methods
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $shipmentMethodCreateCollection = new Entities\ShipmentMethodCreateCollection();
 
@@ -342,7 +397,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $filter = new \Paysera\Component\RestClientCommon\Entity\Filter();
 
@@ -362,7 +417,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $orderFilter = new Entities\OrderFilter();
 
@@ -379,6 +434,7 @@ $orderFilter->setTrackingCode($trackingCode);
 $orderFilter->setShippingGatewayCode($shippingGatewayCode);
 $orderFilter->setWithManifest($withManifest);
 $orderFilter->setWithLabel($withLabel);
+$orderFilter->setEshopOrderId($eshopOrderId);
     
 $result = $merchantClient->getOrdersExport($orderFilter);
 ```
@@ -389,7 +445,7 @@ Confirm orders
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $orderIdsList = new Entities\OrderIdsList();
 
@@ -438,6 +494,16 @@ $result = $merchantClient->getOrderLabel($id);
 ---
 
 
+reset order to draft state
+
+
+```php
+
+$result = $merchantClient->resetOrderToDraft($id);
+```
+---
+
+
 Get order by id
 
 
@@ -451,7 +517,7 @@ Update order
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $orderCreate = new Entities\OrderCreate();
 
@@ -464,6 +530,7 @@ $orderCreate->setSender($sender);
 $orderCreate->setReceiverId($receiverId);
 $orderCreate->setReceiver($receiver);
 $orderCreate->setNotes($notes);
+$orderCreate->setEshopOrderId($eshopOrderId);
     
 $result = $merchantClient->updateOrder($id, $orderCreate);
 ```
@@ -483,7 +550,7 @@ Add a new order
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $orderCreate = new Entities\OrderCreate();
 
@@ -496,6 +563,7 @@ $orderCreate->setSender($sender);
 $orderCreate->setReceiverId($receiverId);
 $orderCreate->setReceiver($receiver);
 $orderCreate->setNotes($notes);
+$orderCreate->setEshopOrderId($eshopOrderId);
     
 $result = $merchantClient->createOrder($orderCreate);
 ```
@@ -505,7 +573,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $orderFilter = new Entities\OrderFilter();
 
@@ -522,6 +590,7 @@ $orderFilter->setTrackingCode($trackingCode);
 $orderFilter->setShippingGatewayCode($shippingGatewayCode);
 $orderFilter->setWithManifest($withManifest);
 $orderFilter->setWithLabel($withLabel);
+$orderFilter->setEshopOrderId($eshopOrderId);
     
 $result = $merchantClient->getOrders($orderFilter);
 ```
@@ -532,7 +601,7 @@ List order prices
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $orderPriceFilter = new Entities\OrderPriceFilter();
 
@@ -552,7 +621,7 @@ Activity filter
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $activityFilter = new Entities\ActivityFilter();
 
@@ -569,7 +638,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $lastActivityFilter = new Entities\LastActivityFilter();
 
@@ -584,7 +653,7 @@ Activity filter
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $activityFilter = new Entities\ActivityFilter();
 
@@ -597,12 +666,17 @@ $result = $merchantClient->getStatistics($activityFilter);
 ---
 
     
-Get countries list
+Standard SQL-style Result filtering
 
 
 ```php
+use MerchantClient\Entity as Entities;
 
-$result = $merchantClient->getCountries();
+$countryFilter = new Entities\CountryFilter();
+
+$countryFilter->setShipmentGatewayCode($shipmentGatewayCode);
+    
+$result = $merchantClient->getCountries($countryFilter);
 ```
 ---
 
@@ -611,7 +685,7 @@ Standard SQL-style Result filtering
 
 
 ```php
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use MerchantClient\Entity as Entities;
 
 $cityFilter = new Entities\CityFilter();
 
@@ -619,6 +693,63 @@ $cityFilter->setCountry($country);
 $cityFilter->setGatewayCode($gatewayCode);
     
 $result = $merchantClient->getCities($cityFilter);
+```
+---
+
+    
+List credentials
+
+
+```php
+
+$result = $merchantClient->getCourierApiCredential($projectId);
+```
+---
+
+
+Update credentials
+
+
+```php
+use MerchantClient\Entity as Entities;
+
+$courierApiCredentialsCreate = new Entities\CourierApiCredentialsCreate();
+
+$courierApiCredentialsCreate->setProject($project);
+$courierApiCredentialsCreate->setGateway($gateway);
+$courierApiCredentialsCreate->setUsername($username);
+$courierApiCredentialsCreate->setPassword($password);
+$courierApiCredentialsCreate->setCountry($country);
+    
+$result = $merchantClient->updateCourierApiCredential($id, $courierApiCredentialsCreate);
+```
+---
+
+Delete credentials
+
+
+```php
+
+$merchantClient->deleteCourierApiCredential($id);
+```
+---
+
+
+Create new credentials
+
+
+```php
+use MerchantClient\Entity as Entities;
+
+$courierApiCredentialsCreate = new Entities\CourierApiCredentialsCreate();
+
+$courierApiCredentialsCreate->setProject($project);
+$courierApiCredentialsCreate->setGateway($gateway);
+$courierApiCredentialsCreate->setUsername($username);
+$courierApiCredentialsCreate->setPassword($password);
+$courierApiCredentialsCreate->setCountry($country);
+    
+$result = $merchantClient->createCourierApiCredential($courierApiCredentialsCreate);
 ```
 ---
 

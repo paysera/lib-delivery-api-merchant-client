@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient\Entity;
+namespace MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Entity;
 
@@ -25,6 +25,22 @@ class OrderConfirmationError extends Entity
     public function setDescriptionToken($descriptionToken)
     {
         $this->set('description_token', $descriptionToken);
+        return $this;
+    }
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->get('description');
+    }
+    /**
+     * @param string $description
+     * @return $this
+     */
+    public function setDescription($description)
+    {
+        $this->set('description', $description);
         return $this;
     }
 }
