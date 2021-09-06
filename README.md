@@ -1,5 +1,5 @@
 
-## paysera/lib-delivery-api-merchant-client
+## vendor-merchant-client
 
 Provides methods to manipulate `MerchantClient` API.
 It automatically authenticates all requests and maps required data structure for you.

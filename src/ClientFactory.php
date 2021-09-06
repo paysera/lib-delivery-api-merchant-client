@@ -1,6 +1,6 @@
 <?php
 
-namespace MerchantClient;
+namespace Paysera\DeliveryApi\MerchantClient;
 
 use Paysera\Component\RestClientCommon\Util\ClientFactoryAbstract;
 use Paysera\Component\RestClientCommon\Client\ApiClient;
