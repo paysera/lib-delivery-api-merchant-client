@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient\Entity;
+namespace MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Result;
 
