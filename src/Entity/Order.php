@@ -45,6 +45,22 @@ class Order extends Entity
         return $this;
     }
     /**
+     * @return string|null
+     */
+    public function getCheckoutProjectId()
+    {
+        return $this->get('checkout_project_id');
+    }
+    /**
+     * @param string $checkoutProjectId
+     * @return $this
+     */
+    public function setCheckoutProjectId($checkoutProjectId)
+    {
+        $this->set('checkout_project_id', $checkoutProjectId);
+        return $this;
+    }
+    /**
      * @return ShipmentGateway
      */
     public function getShipmentGateway()
