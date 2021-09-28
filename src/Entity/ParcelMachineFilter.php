@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient\Entity;
+namespace paysera\MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Filter;
 

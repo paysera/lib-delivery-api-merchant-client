@@ -4,7 +4,7 @@ namespace paysera\MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Result;
 
-class PostOfficeCollection extends Result
+class OrdersStatesCountCollection extends Result
 {
     public function __construct(array $data = [])
     {
@@ -12,7 +12,7 @@ class PostOfficeCollection extends Result
     }
 
     /**
-     * @return PostOffice[]
+     * @return OrdersStatesCount[]
      */
     public function getList()
     {
@@ -23,13 +23,13 @@ class PostOfficeCollection extends Result
 
         $list = [];
         foreach($items as &$item) {
-            $list[] = (new PostOffice())->setDataByReference($item);
+            $list[] = (new OrdersStatesCount())->setDataByReference($item);
         }
 
         return $list;
     }
     /**
-     * @param PostOffice[] $list
+     * @param OrdersStatesCount[] $list
      * @return $this
      */
     public function setList(array $list)

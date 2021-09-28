@@ -1,8 +1,8 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient;
+namespace paysera\MerchantClient;
 
-use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+use paysera\MerchantClient\Entity as Entities;
 use Fig\Http\Message\RequestMethodInterface;
 use Paysera\Component\RestClientCommon\Entity\Entity;
 use Paysera\Component\RestClientCommon\Client\ApiClient;
@@ -907,5 +907,24 @@ class MerchantClient
         $data = $this->apiClient->makeRequest($request);
 
         return new Entities\CourierApiCredentials($data);
+    }
+
+    /**
+     * Standard SQL-style Result filtering
+     * GET /orders-count
+     *
+     * @param Entities\OrderFilter $orderFilter
+     * @return Entities\OrdersStatesCountCollection
+     */
+    public function getOrdersCount(Entities\OrderFilter $orderFilter)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_GET,
+            'orders-count',
+            $orderFilter
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\OrdersStatesCountCollection($data);
     }
 }

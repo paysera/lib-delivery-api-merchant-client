@@ -4,7 +4,7 @@ namespace paysera\MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Entity;
 
-class ShipmentGatewayUpdate extends Entity
+class OrdersStatesCount extends Entity
 {
     public function __construct(array $data = [])
     {
@@ -14,33 +14,33 @@ class ShipmentGatewayUpdate extends Entity
     /**
      * @return string
      */
-    public function getId()
+    public function getState()
     {
-        return $this->get('id');
+        return $this->get('state');
     }
     /**
-     * @param string $id
+     * @param string $state
      * @return $this
      */
-    public function setId($id)
+    public function setState($state)
     {
-        $this->set('id', $id);
+        $this->set('state', $state);
         return $this;
     }
     /**
-     * @return boolean
+     * @return integer
      */
-    public function isEnabled()
+    public function getCount()
     {
-        return $this->get('enabled');
+        return $this->get('count');
     }
     /**
-     * @param boolean $enabled
+     * @param integer $count
      * @return $this
      */
-    public function setEnabled($enabled)
+    public function setCount($count)
     {
-        $this->set('enabled', $enabled);
+        $this->set('count', $count);
         return $this;
     }
 }

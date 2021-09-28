@@ -1,6 +1,6 @@
 <?php
 
-namespace Paysera\DeliveryApi\MerchantClient\Entity;
+namespace paysera\MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Entity;
 
@@ -73,6 +73,22 @@ class CourierApiCredentials extends Entity
     public function setId($id)
     {
         $this->set('id', $id);
+        return $this;
+    }
+    /**
+     * @return string|null
+     */
+    public function getClientId()
+    {
+        return $this->get('clientId');
+    }
+    /**
+     * @param string $clientId
+     * @return $this
+     */
+    public function setClientId($clientId)
+    {
+        $this->set('clientId', $clientId);
         return $this;
     }
 }
