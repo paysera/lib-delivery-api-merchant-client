@@ -1,8 +1,8 @@
 <?php
 
-namespace paysera\MerchantClient;
+namespace Paysera\DeliveryApi\MerchantClient;
 
-use paysera\MerchantClient\Entity as Entities;
+use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 use Fig\Http\Message\RequestMethodInterface;
 use Paysera\Component\RestClientCommon\Entity\Entity;
 use Paysera\Component\RestClientCommon\Client\ApiClient;

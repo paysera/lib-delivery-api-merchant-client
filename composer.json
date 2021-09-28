@@ -3,7 +3,7 @@
     "description": "MerchantClient",
     "autoload": {
         "psr-4": {
-            "paysera\\MerchantClient\\": "src"
+            "Paysera\\DeliveryApi\\MerchantClient\\": "src"
         }
     },
     "require": {

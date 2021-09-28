@@ -1,6 +1,6 @@
 <?php
 
-namespace paysera\MerchantClient\Entity;
+namespace Paysera\DeliveryApi\MerchantClient\Entity;
 
 use Evp\Component\Money\Money;
 use Paysera\Component\RestClientCommon\Entity\Entity;
