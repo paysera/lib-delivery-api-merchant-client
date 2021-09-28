@@ -755,7 +755,6 @@ $result = $merchantClient->createCourierApiCredential($courierApiCredentialsCrea
 ```
 ---
 
-    
 Standard SQL-style Result filtering
 
 
@@ -782,4 +781,3 @@ $orderFilter->setEshopOrderId($eshopOrderId);
 $result = $merchantClient->getOrdersCount($orderFilter);
 ```
 ---
-
