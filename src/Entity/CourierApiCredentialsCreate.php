@@ -96,7 +96,7 @@ class CourierApiCredentialsCreate extends Entity
      */
     public function getClientId()
     {
-        return $this->get('clientId');
+        return $this->get('client_id');
     }
     /**
      * @param string $clientId
@@ -104,7 +104,7 @@ class CourierApiCredentialsCreate extends Entity
      */
     public function setClientId($clientId)
     {
-        $this->set('clientId', $clientId);
+        $this->set('client_id', $clientId);
         return $this;
     }
 }
