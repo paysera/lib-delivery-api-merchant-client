@@ -720,6 +720,7 @@ $courierApiCredentialsCreate->setGateway($gateway);
 $courierApiCredentialsCreate->setUsername($username);
 $courierApiCredentialsCreate->setPassword($password);
 $courierApiCredentialsCreate->setCountry($country);
+$courierApiCredentialsCreate->setClientId($clientId);
     
 $result = $merchantClient->updateCourierApiCredential($id, $courierApiCredentialsCreate);
 ```
@@ -748,8 +749,35 @@ $courierApiCredentialsCreate->setGateway($gateway);
 $courierApiCredentialsCreate->setUsername($username);
 $courierApiCredentialsCreate->setPassword($password);
 $courierApiCredentialsCreate->setCountry($country);
+$courierApiCredentialsCreate->setClientId($clientId);
     
 $result = $merchantClient->createCourierApiCredential($courierApiCredentialsCreate);
 ```
 ---
 
+Standard SQL-style Result filtering
+
+
+```php
+use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+
+$orderFilter = new Entities\OrderFilter();
+
+$orderFilter->setProjects($projects);
+$orderFilter->setOrderStatuses($orderStatuses);
+$orderFilter->setReceiverCountryCode($receiverCountryCode);
+$orderFilter->setReceiverNamePart($receiverNamePart);
+$orderFilter->setReceiverPhonePart($receiverPhonePart);
+$orderFilter->setReceiverStreetPart($receiverStreetPart);
+$orderFilter->setCreatedDateFrom($createdDateFrom);
+$orderFilter->setCreatedDateTill($createdDateTill);
+$orderFilter->setNumber($number);
+$orderFilter->setTrackingCode($trackingCode);
+$orderFilter->setShippingGatewayCode($shippingGatewayCode);
+$orderFilter->setWithManifest($withManifest);
+$orderFilter->setWithLabel($withLabel);
+$orderFilter->setEshopOrderId($eshopOrderId);
+    
+$result = $merchantClient->getOrdersCount($orderFilter);
+```
+---

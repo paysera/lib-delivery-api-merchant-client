@@ -75,4 +75,20 @@ class CourierApiCredentials extends Entity
         $this->set('id', $id);
         return $this;
     }
+    /**
+     * @return string|null
+     */
+    public function getClientId()
+    {
+        return $this->get('client_id');
+    }
+    /**
+     * @param string $clientId
+     * @return $this
+     */
+    public function setClientId($clientId)
+    {
+        $this->set('client_id', $clientId);
+        return $this;
+    }
 }
