@@ -1,5 +1,5 @@
 
-## paysera/lib-delivery-api-merchant-client
+## vendor-merchant-client
 
 Provides methods to manipulate `MerchantClient` API.
 It automatically authenticates all requests and maps required data structure for you.
@@ -83,6 +83,23 @@ $result = $merchantClient->updateMethod($methodsFilter);
 ---
 
     
+Gateway methods filter
+
+
+```php
+use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+
+$gatewayMethodsFilter = new Entities\GatewayMethodsFilter();
+
+$gatewayMethodsFilter->setProjectId($projectId);
+$gatewayMethodsFilter->setFromCountryCode($fromCountryCode);
+$gatewayMethodsFilter->setToCountryCode($toCountryCode);
+    
+$result = $merchantClient->getGatewayMethods($id, $gatewayMethodsFilter);
+```
+---
+
+
 Get shipment gateway by id
 
 
@@ -519,20 +536,22 @@ Update order
 ```php
 use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 
-$orderCreate = new Entities\OrderCreate();
+$orderUpdate = new Entities\OrderUpdate();
 
-$orderCreate->setProjectId($projectId);
-$orderCreate->setShipmentGatewayCode($shipmentGatewayCode);
-$orderCreate->setShipmentMethodCode($shipmentMethodCode);
-$orderCreate->setShipments($shipments);
-$orderCreate->setSenderId($senderId);
-$orderCreate->setSender($sender);
-$orderCreate->setReceiverId($receiverId);
-$orderCreate->setReceiver($receiver);
-$orderCreate->setNotes($notes);
-$orderCreate->setEshopOrderId($eshopOrderId);
+$orderUpdate->setProjectId($projectId);
+$orderUpdate->setShipmentGatewayCode($shipmentGatewayCode);
+$orderUpdate->setShipmentMethodCode($shipmentMethodCode);
+$orderUpdate->setShipments($shipments);
+$orderUpdate->setSenderId($senderId);
+$orderUpdate->setSender($sender);
+$orderUpdate->setReceiverId($receiverId);
+$orderUpdate->setReceiver($receiver);
+$orderUpdate->setNotes($notes);
+$orderUpdate->setEshopOrderId($eshopOrderId);
+$orderUpdate->setOrderCreationType($orderCreationType);
+$orderUpdate->setOrderNotification($orderNotification);
     
-$result = $merchantClient->updateOrder($id, $orderCreate);
+$result = $merchantClient->updateOrder($id, $orderUpdate);
 ```
 ---
 
@@ -564,6 +583,8 @@ $orderCreate->setReceiverId($receiverId);
 $orderCreate->setReceiver($receiver);
 $orderCreate->setNotes($notes);
 $orderCreate->setEshopOrderId($eshopOrderId);
+$orderCreate->setOrderCreationType($orderCreationType);
+$orderCreate->setOrderNotification($orderNotification);
     
 $result = $merchantClient->createOrder($orderCreate);
 ```
@@ -755,6 +776,7 @@ $result = $merchantClient->createCourierApiCredential($courierApiCredentialsCrea
 ```
 ---
 
+    
 Standard SQL-style Result filtering
 
 
@@ -781,3 +803,4 @@ $orderFilter->setEshopOrderId($eshopOrderId);
 $result = $merchantClient->getOrdersCount($orderFilter);
 ```
 ---
+

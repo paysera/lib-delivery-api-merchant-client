@@ -7,6 +7,9 @@ use Paysera\Component\RestClientCommon\Entity\Entity;
 
 class Order extends Entity
 {
+    const ORDER_CREATION_TYPE_ESHOP = 'eshop';
+    const ORDER_CREATION_TYPE_MANUALLY = 'manually';
+
     public function __construct(array $data = [])
     {
         parent::__construct($data);
@@ -61,10 +64,13 @@ class Order extends Entity
         return $this;
     }
     /**
-     * @return ShipmentGateway
+     * @return ShipmentGateway|null
      */
     public function getShipmentGateway()
     {
+        if ($this->get('shipment_gateway') === null) {
+            return null;
+        }
         return (new ShipmentGateway())->setDataByReference($this->getByReference('shipment_gateway'));
     }
     /**
@@ -77,10 +83,13 @@ class Order extends Entity
         return $this;
     }
     /**
-     * @return ShipmentMethod
+     * @return ShipmentMethod|null
      */
     public function getShipmentMethod()
     {
+        if ($this->get('shipment_method') === null) {
+            return null;
+        }
         return (new ShipmentMethod())->setDataByReference($this->getByReference('shipment_method'));
     }
     /**
@@ -227,6 +236,22 @@ class Order extends Entity
         return $this;
     }
     /**
+     * @return string|null
+     */
+    public function getOrderCreationType()
+    {
+        return $this->get('order_creation_type');
+    }
+    /**
+     * @param string $orderCreationType
+     * @return $this
+     */
+    public function setOrderCreationType($orderCreationType)
+    {
+        $this->set('order_creation_type', $orderCreationType);
+        return $this;
+    }
+    /**
      * @return string
      */
     public function getStatus()
@@ -259,10 +284,13 @@ class Order extends Entity
         return $this;
     }
     /**
-     * @return Money
+     * @return Money|null
      */
     public function getPrice()
     {
+        if (!isset($this->get('price')['amount']) || !isset($this->get('price')['currency'])) {
+            return null;
+        }
         return new Money($this->get('price')['amount'], $this->get('price')['currency']);
     }
     /**
@@ -323,6 +351,25 @@ class Order extends Entity
     public function setConfirmationErrors(OrderConfirmationErrorCollection $confirmationErrors)
     {
         $this->setByReference('confirmation_errors', $confirmationErrors->getDataByReference());
+        return $this;
+    }
+    /**
+     * @return OrderNotification|null
+     */
+    public function getOrderNotification()
+    {
+        if ($this->get('order_notification') === null) {
+            return null;
+        }
+        return (new OrderNotification())->setDataByReference($this->getByReference('order_notification'));
+    }
+    /**
+     * @param OrderNotification $orderNotification
+     * @return $this
+     */
+    public function setOrderNotification(OrderNotification $orderNotification)
+    {
+        $this->setByReference('order_notification', $orderNotification->getDataByReference());
         return $this;
     }
 }
