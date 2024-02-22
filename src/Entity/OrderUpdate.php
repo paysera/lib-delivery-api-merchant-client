@@ -4,7 +4,7 @@ namespace Paysera\DeliveryApi\MerchantClient\Entity;
 
 use Paysera\Component\RestClientCommon\Entity\Entity;
 
-class OrderCreate extends Entity
+class OrderUpdate extends Entity
 {
     const ORDER_CREATION_TYPE_ESHOP = 'eshop';
     const ORDER_CREATION_TYPE_MANUALLY = 'manually';
@@ -31,7 +31,7 @@ class OrderCreate extends Entity
         return $this;
     }
     /**
-     * @return string|null
+     * @return string
      */
     public function getShipmentGatewayCode()
     {
@@ -47,7 +47,7 @@ class OrderCreate extends Entity
         return $this;
     }
     /**
-     * @return string|null
+     * @return string
      */
     public function getShipmentMethodCode()
     {

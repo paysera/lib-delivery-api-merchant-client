@@ -81,6 +81,26 @@ class MerchantClient
     }
 
     /**
+     * Gateway methods filter
+     * GET /gateways/{id}/methods
+     *
+     * @param string $id
+     * @param Entities\GatewayMethodsFilter $gatewayMethodsFilter
+     * @return Entities\ShipmentMethodCollection
+     */
+    public function getGatewayMethods($id, Entities\GatewayMethodsFilter $gatewayMethodsFilter)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_GET,
+            sprintf('gateways/%s/methods', rawurlencode($id)),
+            $gatewayMethodsFilter
+        );
+        $data = $this->apiClient->makeRequest($request);
+
+        return new Entities\ShipmentMethodCollection($data);
+    }
+
+    /**
      * Get shipment gateway by id
      * GET /gateways/{id}
      *
@@ -646,15 +666,15 @@ class MerchantClient
      * PUT /orders/{id}
      *
      * @param string $id
-     * @param Entities\OrderCreate $orderCreate
+     * @param Entities\OrderUpdate $orderUpdate
      * @return Entities\Order
      */
-    public function updateOrder($id, Entities\OrderCreate $orderCreate)
+    public function updateOrder($id, Entities\OrderUpdate $orderUpdate)
     {
         $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_PUT,
             sprintf('orders/%s', rawurlencode($id)),
-            $orderCreate
+            $orderUpdate
         );
         $data = $this->apiClient->makeRequest($request);
 
