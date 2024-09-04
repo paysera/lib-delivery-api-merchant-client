@@ -248,7 +248,7 @@ class MerchantClient
             sprintf('shipment-points/%s', rawurlencode($id)),
             null
         );
-        $data = $this->apiClient->makeRequest($request);
+        $this->apiClient->makeRequest($request);
 
         return null;
     }
@@ -363,7 +363,7 @@ class MerchantClient
             sprintf('projects/%s/default-package-size', rawurlencode($projectId)),
             null
         );
-        $data = $this->apiClient->makeRequest($request);
+        $this->apiClient->makeRequest($request);
 
         return null;
     }
@@ -548,6 +548,23 @@ class MerchantClient
     }
 
     /**
+     * Prepaid orders
+     * Only orders with initial statuses will be processed
+     * POST /orders-prepaid
+     *
+     * @param Entities\OrderIdsList $orderIdsList
+     */
+    public function createOrdersPrepaid(Entities\OrderIdsList $orderIdsList)
+    {
+        $request = $this->apiClient->createRequest(
+            RequestMethodInterface::METHOD_POST,
+            'orders-prepaid',
+            $orderIdsList
+        );
+        $this->apiClient->makeRequest($request);
+    }
+
+    /**
      * Generate manifest and call courier for "label_generated" order
      * POST /orders/{id}/manifest
      *
@@ -695,7 +712,7 @@ class MerchantClient
             sprintf('orders/%s', rawurlencode($id)),
             null
         );
-        $data = $this->apiClient->makeRequest($request);
+        $this->apiClient->makeRequest($request);
 
         return null;
     }
@@ -905,7 +922,7 @@ class MerchantClient
             sprintf('courier-api-credentials/%s', rawurlencode($id)),
             null
         );
-        $data = $this->apiClient->makeRequest($request);
+        $this->apiClient->makeRequest($request);
 
         return null;
     }
