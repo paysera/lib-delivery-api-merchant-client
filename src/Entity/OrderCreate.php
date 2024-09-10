@@ -8,11 +8,8 @@ class OrderCreate extends Entity
 {
     const ORDER_CREATION_TYPE_ESHOP = 'eshop';
     const ORDER_CREATION_TYPE_MANUALLY = 'manually';
-
-    public function __construct(array $data = [])
-    {
-        parent::__construct($data);
-    }
+    const ORDER_INITIAL_STATUS_DRAFT = 'draft';
+    const ORDER_INITIAL_STATUS_PREPAID = 'prepaid';
 
     /**
      * @return string
@@ -227,6 +224,22 @@ class OrderCreate extends Entity
     public function setOrderNotification(OrderNotificationCreate $orderNotification)
     {
         $this->setByReference('order_notification', $orderNotification->getDataByReference());
+        return $this;
+    }
+    /**
+     * @return string|null
+     */
+    public function getOrderInitialStatus()
+    {
+        return $this->get('order_initial_status');
+    }
+    /**
+     * @param string $orderInitialStatus
+     * @return $this
+     */
+    public function setOrderInitialStatus($orderInitialStatus)
+    {
+        $this->set('order_initial_status', $orderInitialStatus);
         return $this;
     }
 }

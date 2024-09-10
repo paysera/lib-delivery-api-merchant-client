@@ -472,6 +472,21 @@ $result = $merchantClient->createOrdersConfirm($orderIdsList);
 ```
 ---
 
+
+Prepaid orders
+
+
+```php
+use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
+
+$orderIdsList = new Entities\OrderIdsList();
+
+$orderIdsList->setOrderIds($orderIds);
+    
+$result = $merchantClient->createOrdersPrepaid($orderIdsList);
+```
+---
+
     
 Generate manifest and call courier for &quot;label_generated&quot; order
 
@@ -585,6 +600,7 @@ $orderCreate->setNotes($notes);
 $orderCreate->setEshopOrderId($eshopOrderId);
 $orderCreate->setOrderCreationType($orderCreationType);
 $orderCreate->setOrderNotification($orderNotification);
+$orderCreate->setOrderInitialStatus(Entities\OrderCreate::ORDER_INITIAL_STATUS_PREPAID);
     
 $result = $merchantClient->createOrder($orderCreate);
 ```
