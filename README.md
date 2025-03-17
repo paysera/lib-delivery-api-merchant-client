@@ -601,6 +601,7 @@ $orderCreate->setEshopOrderId($eshopOrderId);
 $orderCreate->setOrderCreationType($orderCreationType);
 $orderCreate->setOrderNotification($orderNotification);
 $orderCreate->setOrderInitialStatus(Entities\OrderCreate::ORDER_INITIAL_STATUS_PREPAID);
+$orderCreate->setTestMode(true);
     
 $result = $merchantClient->createOrder($orderCreate);
 ```
