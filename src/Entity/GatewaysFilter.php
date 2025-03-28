@@ -13,6 +13,7 @@ class GatewaysFilter extends Entity
     {
         return $this->get('project_id');
     }
+
     /**
      * @param string $projectId
      * @return $this
@@ -22,6 +23,7 @@ class GatewaysFilter extends Entity
         $this->set('project_id', $projectId);
         return $this;
     }
+
     /**
      * @return string|null
      */
@@ -29,6 +31,7 @@ class GatewaysFilter extends Entity
     {
         return $this->get('from_country_code');
     }
+
     /**
      * @param string $fromCountryCode
      * @return $this
@@ -38,6 +41,7 @@ class GatewaysFilter extends Entity
         $this->set('from_country_code', $fromCountryCode);
         return $this;
     }
+
     /**
      * @return string|null
      */
@@ -45,6 +49,7 @@ class GatewaysFilter extends Entity
     {
         return $this->get('to_country_code');
     }
+
     /**
      * @param string $toCountryCode
      * @return $this
@@ -54,6 +59,7 @@ class GatewaysFilter extends Entity
         $this->set('to_country_code', $toCountryCode);
         return $this;
     }
+
     /**
      * @return ShipmentCreate[]
      */
@@ -65,12 +71,13 @@ class GatewaysFilter extends Entity
         }
 
         $list = [];
-        foreach($items as &$item) {
+        foreach ($items as &$item) {
             $list[] = (new ShipmentCreate())->setDataByReference($item);
         }
 
         return $list;
     }
+
     /**
      * @param ShipmentCreate[] $shipments
      * @return $this
@@ -78,12 +85,13 @@ class GatewaysFilter extends Entity
     public function setShipments(array $shipments)
     {
         $data = [];
-        foreach($shipments as $item) {
+        foreach ($shipments as $item) {
             $data[] = $item->getDataByReference();
         }
         $this->setByReference('shipments', $data);
         return $this;
     }
+
     /**
      * @return string|null
      */
@@ -91,6 +99,7 @@ class GatewaysFilter extends Entity
     {
         return $this->get('shipment_method_code');
     }
+
     /**
      * @param string $shipmentMethodCode
      * @return $this
@@ -98,6 +107,24 @@ class GatewaysFilter extends Entity
     public function setShipmentMethodCode($shipmentMethodCode)
     {
         $this->set('shipment_method_code', $shipmentMethodCode);
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getTestMode()
+    {
+        return $this->get('test_mode');
+    }
+
+    /**
+     * @param bool $testMode
+     * @return $this
+     */
+    public function setTestMode($testMode)
+    {
+        $this->set('test_mode', $testMode);
         return $this;
     }
 }
