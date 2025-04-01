@@ -242,4 +242,22 @@ class OrderCreate extends Entity
         $this->set('order_initial_status', $orderInitialStatus);
         return $this;
     }
+
+    /**
+     * @param bool|null $testMode
+     * @return $this
+     */
+    public function setTestMode($testMode)
+    {
+        $this->set('test_mode', $testMode);
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getTestMode()
+    {
+        return $this->get('test_mode');
+    }
 }
