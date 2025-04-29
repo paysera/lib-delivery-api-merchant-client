@@ -109,22 +109,4 @@ class GatewaysFilter extends Entity
         $this->set('shipment_method_code', $shipmentMethodCode);
         return $this;
     }
-
-    /**
-     * @return bool|null
-     */
-    public function getTestMode()
-    {
-        return $this->get('test_mode');
-    }
-
-    /**
-     * @param bool $testMode
-     * @return $this
-     */
-    public function setTestMode($testMode)
-    {
-        $this->set('test_mode', $testMode);
-        return $this;
-    }
 }
