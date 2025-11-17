@@ -75,4 +75,25 @@ class ShipmentCreate extends Entity
         $this->set('height', $height);
         return $this;
     }
+    /**
+     * @return CustomDeclaration|null
+     */
+    public function getCustomDeclaration()
+    {
+        if ($this->get('custom_declaration') === null) {
+            return null;
+        }
+
+        return (new CustomDeclaration())
+            ->setDataByReference($this->getByReference('custom_declaration'));
+    }
+    /**
+     * @param CustomDeclaration $customDeclaration
+     * @return $this
+     */
+    public function setCustomDeclaration(CustomDeclaration $customDeclaration)
+    {
+        $this->setByReference('custom_declaration', $customDeclaration->getDataByReference());
+        return $this;
+    }
 }
