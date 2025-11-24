@@ -54,7 +54,35 @@ $result = $merchantClient->getDefaultPackageSizes($filter);
 ```
 ---
 
-    
+
+Validate project credentials
+
+
+```php
+use Paysera\DeliveryApi\MerchantClient\Entity\ProjectCredentials;
+use RuntimeException;
+
+$credentials = new ProjectCredentials();
+
+$credentials->setProjectId($projectId);
+$credentials->setPassword($password);
+
+try {
+    $isValid = $merchantClient->validateProjectCredentials($credentials);
+
+    if ($isValid) {
+        // Credentials are valid
+    } else {
+        // Invalid credentials
+    }
+} catch (RuntimeException $e) {
+    // Handle rate limit or other errors
+    echo $e->getMessage();
+}
+```
+---
+
+
 Get shipment method by id
 
 
