@@ -4,7 +4,6 @@ namespace Paysera\DeliveryApi\MerchantClient;
 
 use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 use Fig\Http\Message\RequestMethodInterface;
-use Paysera\Component\RestClientCommon\Entity\Entity;
 use Paysera\Component\RestClientCommon\Client\ApiClient;
 use Paysera\Component\RestClientCommon\Entity\File;
 use Paysera\Component\RestClientCommon\Entity\Filter;
@@ -514,7 +513,7 @@ class MerchantClient
      * GET /orders-export
      *
      * @param Entities\OrderFilter $orderFilter
-     * @return Entities\Paysera.File
+     * @return File
      */
     public function getOrdersExport(Entities\OrderFilter $orderFilter)
     {
@@ -525,7 +524,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\Paysera.File($data);
+        return new File($data);
     }
 
     /**
@@ -588,7 +587,7 @@ class MerchantClient
      * GET /orders/{id}/manifest
      *
      * @param string $id
-     * @return Entities\Paysera.File
+     * @return File
      */
     public function getOrderManifest($id)
     {
@@ -599,7 +598,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\Paysera.File($data);
+        return new File($data);
     }
 
     /**
@@ -626,7 +625,7 @@ class MerchantClient
      * GET /orders/{id}/label
      *
      * @param string $id
-     * @return Entities\Paysera.File
+     * @return File
      */
     public function getOrderLabel($id)
     {
@@ -637,7 +636,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\Paysera.File($data);
+        return new File($data);
     }
 
     /**
@@ -779,7 +778,7 @@ class MerchantClient
      * GET /statistics/export
      *
      * @param Entities\ActivityFilter $activityFilter
-     * @return Entities\Paysera.File
+     * @return File
      */
     public function getStatisticExport(Entities\ActivityFilter $activityFilter)
     {
@@ -790,7 +789,7 @@ class MerchantClient
         );
         $data = $this->apiClient->makeRequest($request);
 
-        return new Entities\Paysera.File($data);
+        return new File($data);
     }
 
     /**
