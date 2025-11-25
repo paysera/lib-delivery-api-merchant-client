@@ -7,6 +7,9 @@ use Fig\Http\Message\RequestMethodInterface;
 use Paysera\Component\RestClientCommon\Client\ApiClient;
 use Paysera\Component\RestClientCommon\Entity\File;
 use Paysera\Component\RestClientCommon\Entity\Filter;
+use GuzzleHttp\Exception\RequestException;
+use RuntimeException;
+use Paysera\DeliveryApi\MerchantClient\Entity\ProjectCredentials;
 
 class MerchantClient
 {
@@ -962,5 +965,56 @@ class MerchantClient
         $data = $this->apiClient->makeRequest($request);
 
         return new Entities\OrdersStatesCountCollection($data);
+    }
+
+    /**
+     * Validate project credentials
+     * POST /projects/validate-credentials
+     * This endpoint is not protected by authentication
+     *
+     * @param ProjectCredentials $credentials
+     * @return bool Returns true if credentials are valid (204), false if invalid (401)
+     * @throws RuntimeException if rate limit exceeded (429) or other error occurs
+     */
+    public function validateProjectCredentials(ProjectCredentials $credentials): bool
+    {
+        $client = $this->apiClient->withOptions(['http_errors' => false]);
+
+        $request = $client->createRequest(
+            RequestMethodInterface::METHOD_POST,
+            'projects/validate-credentials',
+            $credentials
+        );
+
+        try {
+            $response = $client->makeRawRequest($request);
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode === 204) {
+                return true;
+            }
+
+            if ($statusCode === 401) {
+                return false;
+            }
+
+            if ($statusCode === 429) {
+                throw new RuntimeException(
+                    'Rate limit exceeded. Please try again later.',
+                    429
+                );
+            }
+
+            throw new RuntimeException(
+                sprintf('Unexpected response status code: %d', $statusCode),
+                $statusCode
+            );
+        } catch (RequestException $e) {
+            throw new RuntimeException(
+                sprintf('Request failed: %s', $e->getMessage()),
+                0,
+                $e
+            );
+        }
     }
 }
