@@ -2,13 +2,12 @@
 
 namespace Paysera\DeliveryApi\MerchantClient;
 
+use Paysera\Component\RestClientCommon\Exception\ClientException;
 use Paysera\DeliveryApi\MerchantClient\Entity as Entities;
 use Fig\Http\Message\RequestMethodInterface;
 use Paysera\Component\RestClientCommon\Client\ApiClient;
 use Paysera\Component\RestClientCommon\Entity\File;
 use Paysera\Component\RestClientCommon\Entity\Filter;
-use GuzzleHttp\Exception\RequestException;
-use RuntimeException;
 use Paysera\DeliveryApi\MerchantClient\Entity\ProjectCredentials;
 
 class MerchantClient
@@ -972,49 +971,36 @@ class MerchantClient
      * POST /projects/validate-credentials
      * This endpoint is not protected by authentication
      *
-     * @param ProjectCredentials $credentials
-     * @return bool Returns true if credentials are valid (204), false if invalid (401)
-     * @throws RuntimeException if rate limit exceeded (429) or other error occurs
+     * @param ProjectCredentials $credentials The credentials to validate (project_id and password)
+     * @return bool Returns true if credentials are valid (HTTP 204), false if invalid (HTTP 401)
+     * @throws ClientException If validation fails due to rate limiting (HTTP 429),
+     *                         server errors (HTTP 5xx), or other API errors (except 401)
      */
-    public function validateProjectCredentials(ProjectCredentials $credentials): bool
+    public function validateProjectCredentials(ProjectCredentials $credentials)
     {
-        $client = $this->apiClient->withOptions(['http_errors' => false]);
-
-        $request = $client->createRequest(
+        $request = $this->apiClient->createRequest(
             RequestMethodInterface::METHOD_POST,
             'projects/validate-credentials',
             $credentials
         );
 
         try {
-            $response = $client->makeRawRequest($request);
+            $response = $this->apiClient->makeRawRequest($request);
             $statusCode = $response->getStatusCode();
 
             if ($statusCode === 204) {
                 return true;
             }
 
+            return false;
+        } catch (ClientException $exception) {
+            $statusCode = $exception->getResponse()->getStatusCode();
+
             if ($statusCode === 401) {
                 return false;
             }
 
-            if ($statusCode === 429) {
-                throw new RuntimeException(
-                    'Rate limit exceeded. Please try again later.',
-                    429
-                );
-            }
-
-            throw new RuntimeException(
-                sprintf('Unexpected response status code: %d', $statusCode),
-                $statusCode
-            );
-        } catch (RequestException $e) {
-            throw new RuntimeException(
-                sprintf('Request failed: %s', $e->getMessage()),
-                0,
-                $e
-            );
+            throw $exception;
         }
     }
 }

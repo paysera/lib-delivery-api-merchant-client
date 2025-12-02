@@ -57,10 +57,13 @@ $result = $merchantClient->getDefaultPackageSizes($filter);
 
 Validate project credentials
 
+This method validates project credentials without requiring authentication.
+It returns `true` if credentials are valid (HTTP 204), or `false` if invalid (HTTP 401).
+Other errors (rate limiting, server errors) will throw a `ClientException`.
 
 ```php
 use Paysera\DeliveryApi\MerchantClient\Entity\ProjectCredentials;
-use RuntimeException;
+use Paysera\Component\RestClientCommon\Exception\ClientException;
 
 $credentials = new ProjectCredentials();
 
@@ -71,13 +74,14 @@ try {
     $isValid = $merchantClient->validateProjectCredentials($credentials);
 
     if ($isValid) {
-        // Credentials are valid
+        // Credentials are valid (HTTP 204)
     } else {
-        // Invalid credentials
+        // Invalid credentials (HTTP 401)
     }
-} catch (RuntimeException $e) {
-    // Handle rate limit or other errors
-    echo $e->getMessage();
+} catch (ClientException $e) {
+    // Handle rate limit (HTTP 429) or other API errors
+    $statusCode = $e->getResponse()->getStatusCode();
+    echo "API Error (HTTP {$statusCode}): " . $e->getMessage();
 }
 ```
 ---
